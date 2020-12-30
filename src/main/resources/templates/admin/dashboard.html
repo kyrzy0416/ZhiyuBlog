@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>后台仪表盘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="admin/_fragments::menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">后台管理</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="../../static/images/headPortraits.jpg" th:src="@{/images/headPortraits.jpg}" alt="" class="ui avatar image">
+                        Zhiyu
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item" th:href="@{/admin/logout}">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black button icon m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="ui attached borderless menu">
+    <div class="ui container">
+        <div class="item">
+            <div class="ui breadcrumb">
+                <a class="section">主页</a>
+                <i class="right chevron icon divider"></i>
+                <div class="active section">仪表盘</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui stackable grid m-margin-tb container">
+    <div class="four wide column">
+        <div class="ui m-padded card">
+            <div class="content">
+                <a class="ui right floated circular basic icon button" th:href="@{/admin/blogs}">
+                    <i class="blue linkify circle icon"></i>
+                </a>
+                <div class="m-text-thin m-text-spaced m-opacity-tiny" style="margin-bottom: 10px;">文章</div>
+                <div class="description">
+                    <h2 th:text="${pageCount}">39</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui m-padded card">
+            <div class="content">
+                <a class="ui right floated circular basic icon button">
+                    <i class="blue linkify circle icon"></i>
+                </a>
+                <div class="m-text-thin m-text-spaced m-opacity-tiny " style="margin-bottom: 10px;">评论</div>
+                <div class="description">
+                    <h2 th:text="${commentsCount}">648</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui m-padded card">
+            <div class="content">
+                <a class="ui right floated circular basic icon button" id="totalVisit">
+                    <i class="blue info circle icon"></i>
+                </a>
+                <div class="m-text-thin m-text-spaced m-opacity-tiny" style="margin-bottom: 10px;">总访问数</div>
+                <div class="description">
+                    <h2 th:text="${views}">98,146</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui m-padded card">
+            <div class="content">
+                <a class="ui right floated circular basic icon button">
+                    <i class="blue info circle icon"></i>
+                </a>
+                <div class="m-text-thin m-text-spaced m-opacity-tiny" style="margin-bottom: 10px;">网站建立天数</div>
+                <div class="description">
+                    <h2 id="citeBuildTime">501</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--新动态-->
+    <div class="five wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <h3>新动态</h3>
+                    </div>
+                    <div class="column right aligned">
+
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment" th:each="blog: ${recommendBlogs}">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <a href="" target="_blank" class="m-black m-text-thin" th:text="${blog.title}">XHTML 指可扩展超文本标签语言</a>
+                    </div>
+                    <div class="column right aligned">
+                        <label class="m-black m-text-thin" th:text="${blog.updateTime}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    速记-->
+    <div class="six wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <h3>
+                            速记
+                            <i class="blue info circle icon"></i>
+                        </h3>
+                    </div>
+                    <div class="column left aligned">
+                    </div>
+                </div>
+            </div>
+            <div class="ui blue segment">
+                <div class="ui form">
+                    <div class="field">
+                        <textarea placeholder="写点什么吧...."></textarea>
+                    </div>
+                    <div class="field">
+                        <button class="ui primary button" type="submit">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    操作记录-->
+    <div class="five wide column">
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <h3>操作记录</h3>
+                    </div>
+                    <div class="column right aligned">
+
+                    </div>
+                </div>
+            </div>
+            <div class="ui blue segment" th:each="op: ${operations}">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <a class="ui blue label">
+                             <!-- ${op.action}-->
+                            <span th:text="登录后台"></span>
+                            <input type="hidden" th:value="${op.time}" class="retTime">
+                            <div class="detail detailTime">1分钟前</div>
+                        </a>
+                    </div>
+                    <div class="column right aligned">
+                        <a class="ui label">
+                            <i class="user circle icon"></i>
+                            <span >Zhiyu</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态框集-->
+<div class="ui basic modal">
+    <div class="ui icon header">
+        <i class="user plus icon"></i>
+        总访问信息
+    </div>
+    <div class="content">
+
+    </div>
+    <div class="actions">
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            确定
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+<script>
+    $(function () {
+        $(".ui.dropdown").dropdown({
+            on: 'hover',
+        });
+
+        $('#citeBuildTime').text(calculateDays('2020-4-4'))
+
+        $('#totalVisit').click(function () {
+            $('.ui.basic.modal')
+                .modal('show')
+            ;
+        })
+
+        $('.retTime').next().text(function (n, cur) {
+            return getDateDiff(getDateTimeStamp($(this).prev().val()));
+        });
+
+
+    })
+    function calculateDays (startDate) {
+        var days = 0
+        const startArray = startDate.split('-')
+        const formatStartDate = new Date(startArray[0], startArray[1] - 1, startArray[2])
+        const today = new Date()
+        const formatToday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        days = parseInt((formatToday - formatStartDate) / 1000 / 60 / 60 / 24)
+        if (days < 0) {
+            days = 0
+        }
+        console.log(days);
+        return days
+    }
+
+    function getDateDiff(dateTimeStamp){
+        console.log(dateTimeStamp)
+        var minute = 1000 * 60;
+        var hour = minute * 60;
+        var day = hour * 24;
+        var halfamonth = day * 15;
+        var month = day * 30;
+        var now = new Date().getTime();
+        var diffValue = now - dateTimeStamp;
+        if(diffValue < 0){return;}
+        var monthC =diffValue/month;
+        var weekC =diffValue/(7*day);
+        var dayC =diffValue/day;
+        var hourC =diffValue/hour;
+        var minC =diffValue/minute;
+        if(monthC>=1){
+            result="" + parseInt(monthC) + "月前";
+        }
+        else if(weekC>=1){
+            result="" + parseInt(weekC) + "周前";
+        }
+        else if(dayC>=1){
+            result=""+ parseInt(dayC) +"天前";
+        }
+        else if(hourC>=1){
+            result=""+ parseInt(hourC) +"小时前";
+        }
+        else if(minC>=1){
+            result=""+ parseInt(minC) +"分钟前";
+        }else
+            result="刚刚";
+        return result;
+    }
+    function getDateTimeStamp(dateStr){
+        return Date.parse(dateStr);
+    }
+</script>
+</body>
+</html>

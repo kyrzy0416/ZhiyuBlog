@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+<!--    导航-->
+<nav th:replace="admin/_fragments::menu(1)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">后台管理</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="../../static/images/headPortraits.jpg" th:src="@{/images/headPortraits.jpg}" alt="" class="ui avatar image">
+                        Zhiyu
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item" th:href="@{/admin/logout}">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black button icon m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="ui attached borderless pointing menu">
+    <div class="ui container">
+        <div class="menu">
+            <div class="item">
+                <div class="ui breadcrumb">
+                    <a class="section">主页</a>
+                    <i class="right chevron icon divider"></i>
+                    <div class="active section">博客</div>
+                </div>
+            </div>
+        </div>
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/blogs/input}" class="item">发布</a>
+            <a href="#" th:href="@{/admin/blogs/input}" class="active blue item">列表</a>
+        </div>
+    </div>
+</div>
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui segment form">
+            <input type="hidden" name="page">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui type selection dropdown">
+                        <input type="hidden" name="typeId">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">分类</div>
+                        <div class="menu">
+                            <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">未获取到</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" id="search-btn" class="ui blue button"><i class="search icon"></i>搜索</button>
+                    <button type="button" id="clear-btn" class="ui grey button"><i class="trash alternate outline icon"></i>清除</button>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <table th:fragment="blogList" class="ui compact blue table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>推荐</th>
+                    <th>状态</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">Spring源码剖析1</td>
+                    <td th:text="${blog.type.name}">Spring</td>
+                    <td th:text="${blog.recommend} ? '是' : '否'">是</td>
+                    <td th:text="${blog.published} ? '发布' : '草稿'"></td>
+                    <td th:text="${blog.updateTime}">2020-3-27 21:16</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini blue basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <!--这里的page来自form表单中的<input type="hidden" name="page">-->
+                        <a onclick="page(this)" th:attr="data-page=${page.number}-1" th:unless="${page.first}" class="ui mini blue button">上一页</a>
+                        <a onclick="page(this)" th:attr="data-page=${page.number}+1" th:unless="${page.last}" class="ui mini blue button">下一页</a>
+                        <a href="#" th:href="@{/admin/blogs/input}" class="ui right floated blue mini basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示</div>
+                <p th:text="${message}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+<script>
+    $(function () {
+        $(".menu.toggle").click(function () {
+            $(".m-item").toggleClass("m-mobile-hide");
+        });
+        $(".ui.dropdown").dropdown({
+            on: 'hover',
+        });
+        $("#search-btn").click(function () {
+            loadData();
+        });
+        //清除按钮
+        $('#clear-btn')
+            .on('click', function() {
+                $('.ui.type.dropdown')
+                    .dropdown('clear')
+                ;
+            })
+        ;
+    });
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loadData();
+    }
+    $(".message .close").on('click', function () {
+        $("[name='page']").val($(obj).data("0"));
+        $(this).closest('.message')
+            .transition('fade');
+    });
+    // 实现thymeleaf和ajax的局部刷新博客列表
+    function loadData() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+</script>
+</body>
+</html>

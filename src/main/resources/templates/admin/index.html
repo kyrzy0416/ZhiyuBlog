@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理主页</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <style>
+
+        .hidden.menu {
+            display: none;
+        }
+
+        .masthead.segment {
+            min-height: 700px;
+            padding: 1em 0em;
+        }
+        .masthead .logo.item img {
+            margin-right: 1em;
+        }
+        .masthead .ui.menu .ui.button {
+            margin-left: 0.5em;
+        }
+        .masthead h1.ui.header {
+            margin-top: 3em;
+            margin-bottom: 0em;
+            font-size: 4em;
+            font-weight: normal;
+        }
+        .masthead h2 {
+            font-size: 1.7em;
+            font-weight: normal;
+        }
+
+        .ui.vertical.stripe {
+            padding: 8em 0em;
+        }
+        .ui.vertical.stripe h3 {
+            font-size: 2em;
+        }
+        .ui.vertical.stripe .button + h3,
+        .ui.vertical.stripe p + h3 {
+            margin-top: 3em;
+        }
+        .ui.vertical.stripe .floated.image {
+            clear: both;
+        }
+        .ui.vertical.stripe p {
+            font-size: 1.33em;
+        }
+        .ui.vertical.stripe .horizontal.divider {
+            margin: 3em 0em;
+        }
+
+        .quote.stripe.segment {
+            padding: 0em;
+        }
+        .quote.stripe.segment .grid .column {
+            padding-top: 5em;
+            padding-bottom: 5em;
+        }
+
+        .footer.segment {
+            padding: 5em 0em;
+        }
+
+        .secondary.pointing.menu .toc.item {
+            display: none;
+        }
+
+        @media only screen and (max-width: 700px) {
+            .ui.fixed.menu {
+                display: none !important;
+            }
+            .secondary.pointing.menu .item,
+            .secondary.pointing.menu .menu {
+                display: none;
+            }
+            .secondary.pointing.menu .toc.item {
+                display: block;
+            }
+            .masthead.segment {
+                min-height: 350px;
+            }
+            .masthead h1.ui.header {
+                font-size: 2em;
+                margin-top: 1.5em;
+            }
+            .masthead h2 {
+                margin-top: 0.5em;
+                font-size: 1.5em;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- Following Menu -->
+<div class="ui large top fixed menu transition hidden">
+    <div class="ui container">
+        <a class="active item">主页</a>
+        <a class="item">工作</a>
+        <a class="item">公司</a>
+        <a class="item">职业</a>
+        <div class="right menu">
+            <div class="item">
+                <a class="ui button">登录</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button">注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Contents -->
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+
+        <!--    导航-->
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a th:href="@{/admin/index}" class="active item">主页</a>
+                <a th:href="@{/admin/blogs}" class="item">博客</a>
+                <a th:href="@{/admin/types}" class="item">分类</a>
+                <a th:href="@{/admin/tags}" class="item">标签</a>
+            </div>
+        </div>
+
+        <div class="ui text container">
+            <h1 class="ui inverted header">
+                Hi! Zhiyu!
+            </h1>
+            <h2>后台页面管理</h2>
+            <a class="ui huge primary button" th:href="@{/admin/dashboard}">进入 <i class="right arrow icon"></i></a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="_fragments::footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+</body>
+</html>

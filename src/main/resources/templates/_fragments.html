@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">博客详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate_4.css" th:href="@{/css/animate_4.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--    导航-->
+<nav th:fragment="menu(n)" class="ui attached segment m-padded-tb-mini fadeInDown animated">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <div class="ui white header item"><a href="#" th:href="@{/}"><img class="ui rounded image mini" src="/static/images/cat.png" th:src="@{/images/cat.png}" alt=""></a></div>
+            <a href="#" th:href="@{/index}" class="ui blue m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><span class="m-black">首页</span></a>
+            <a href="#" th:href="@{/types/-1}" class="ui blue m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><span class="m-black">分类</span></a>
+            <a href="#" th:href="@{/tags/-1}" class="ui blue m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><span class="m-black">标签</span></a>
+            <a href="#" th:href="@{/archives}" class="ui blue m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><span class="m-black">归档</span></a>
+            <a href="#" th:href="@{/about}" class="ui blue m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><span class="m-black">关于我</span></a>
+            <div class="m-item right item  m-mobile-hide">
+                <form name="search" action="#" method="post" th:action="@{/search}">
+                    <div class="ui icon transparent input">
+                        <input type="text" name="query" placeholder="搜索...." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle white button icon m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--底部-->
+<footer th:fragment="footer" class="ui vertical segment m-padded-tb-big footer">
+    <div class="ui center aligned container">
+        <!--<div class="ui inverted stackable grid">
+            &lt;!&ndash;<div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" class="ui rounded image" style="width: 110px" alt="">
+                    </div>
+                </div>
+            </div>&ndash;&gt;
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newblogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">SpringBoot的自动配置</a>
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email : @qq.com</a>
+                    <a href="#" class="item">QQ : </a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">Zhiyu</h4>
+                <div class="ui inverted link list">
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客,分享关于学习笔记、个人日志等</p>
+                </div>
+            </div>
+        </div>-->
+        <!--分割线-->
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019-2020 ZhiyuBlog Designed by Zhiyu</p>
+    </div>
+</footer>
+
+<th:block th:fragment="common-script">
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script>
+        //固定底部
+        let footer = $(".footer");
+        let h = footer.height();
+        let wh = $(window).height();
+        let xh = wh - (h+footer.offset().top-$(document).scrollTop());
+        if (xh > 85) {
+            footer.addClass("footer-fixed");
+        }else {
+            footer.removeClass("footer-fixed");
+        }
+    </script>
+</th:block>
+
+</body>
+</html>

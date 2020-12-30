@@ -1,0 +1,18 @@
+#开发环境
+spring:
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&amp;characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    root: info
+    com.zhiyu: debug
+  file:
+    name: log/blog-dev.log

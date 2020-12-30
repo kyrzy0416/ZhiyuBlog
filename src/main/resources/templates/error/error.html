@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>未知错误 - ZhiyuBlog</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.2.14/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+<h1>未知错误 详情F12</h1>
+<!--错误注释-->
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
+    <div th:utext="'Exception message : ' + ${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tag">
+                <span th:utext="${st}" th:remove="tag"></span>
+        </li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+</div>
+</body>
+</html>
